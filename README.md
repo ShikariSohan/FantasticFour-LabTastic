@@ -5,6 +5,5 @@ The  platform will significantly improve the education experience for our studen
 The platform's evaluation system will also help teachers to assess students' understanding and performance and provide feedback.
 
 # Use Case Diagram 
-
-![UseCase Diagram](UseCaseDiagram.png)
+![UseCase Diagram](/asset/UseCaseDiagram.png)
 
