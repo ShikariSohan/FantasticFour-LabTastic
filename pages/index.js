@@ -3,14 +3,17 @@ import Navbar from "../componants/Navbar";
 import { useEffect } from "react";
 export default function Home() {
   
+<<<<<<< HEAD
   let name = "Guest";
-  useEffect(()=>{
-    let user = JSON.parse(localStorage.getItem("user"));
-    if(user.isLoggedIn){
-      name = user.role
-    }
+  // useEffect(()=>{
+  //   let user = JSON.parse(localStorage.getItem("user"));
+  //   if(user.isLoggedIn){
+  //     name = user.role
+  //   }
 
-  },[])
+  // },[])
+=======
+>>>>>>> ffee18b7aef638df68bccf495f4d7650a1c8205f
   return (
     <div
       style={{
