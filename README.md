@@ -6,3 +6,5 @@ The platform's evaluation system will also help teachers to assess students' und
 
 # Use Case Diagram 
 
+![UseCase Diagram](UseCaseDiagram.png)
+
