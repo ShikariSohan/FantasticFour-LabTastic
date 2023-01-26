@@ -7,3 +7,8 @@ The platform's evaluation system will also help teachers to assess students' und
 # Use Case Diagram 
 ![UseCase Diagram](/asset/UseCaseDiagram.png)
 
+# Application Architecture Diagram
+![Application Architecture Diagram](/asset/applicationArchitecture.png)
+
+# Data Flow Diagram 
+![UseCase Diagram](/asset/dataflow.png)
