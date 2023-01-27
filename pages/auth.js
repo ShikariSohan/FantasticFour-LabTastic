@@ -42,20 +42,18 @@ export default function Home() {
   const loginSubmit = async () => {
     try {
       await axios.post("/api/auth/login", loginInfo).then(function (res) {
-       
-          console.log(res.data);
-          const userData = {
-            isLoggedIn: true,
-            ...res.data.data,
-          };
+        console.log(res.data);
+        const userData = {
+          isLoggedIn: true,
+          ...res.data.data,
+        };
         localStorage.setItem("user", JSON.stringify(userData));
-          setMsg({
-            type: "Success",
-            open: true,
-            color: "green",
-          });
-          router.push("/");
-        
+        setMsg({
+          type: "Success",
+          open: true,
+          color: "green",
+        });
+        router.push("/");
       });
     } catch (e) {
       console.log(e);
@@ -79,6 +77,7 @@ export default function Home() {
           open: true,
           color: "green",
         });
+        window.location.reload();
       })
       .catch(function (e) {
         console.log(e);

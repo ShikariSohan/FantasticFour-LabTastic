@@ -44,11 +44,11 @@ export default function NewCourseModal({ opened, setOpened }) {
     try {
       const result = await axios.post("/api/courses", classroom);
       setOpened(false);
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
   };
-
   return (
     <Modal
       title="Add New Classroom"
