@@ -46,6 +46,7 @@ export default function Home(props) {
     }
   }, [id]);
 
+
   return (
     <div
       style={{
@@ -129,7 +130,7 @@ export default function Home(props) {
         setOpened={setLabDemo}
         subject={course.subject}
       />
-      <VideoUploadModal opened={openVideoModal} setOpened={setOpenVideoModal} />
+      <VideoUploadModal opened={openVideoModal} setOpened={setOpenVideoModal} id={id} />
       <StudentTable/>
     </div>
   );

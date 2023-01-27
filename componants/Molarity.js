@@ -20,10 +20,10 @@ let img;
 
 const Molarity = () => {
     const setup = (p5, canvasParentRef) => {
-        cnv = p5.createCanvas(1080, 820).parent(canvasParentRef);
+        cnv = p5.createCanvas(1400, 850).parent(canvasParentRef);
         img = p5.loadImage('/beaker.png');
-        vSlider = getSlider(p5, (p5.windowWidth-p5.width)/2-240, 490, 0.1, 1.5)
-        mSlider = getSlider(p5, (p5.windowWidth-p5.width)/2-110, 490, 0.0, 1.0)
+        vSlider = getSlider(p5, (p5.windowWidth-p5.width)/2-220, 570, 0.1, 1.5)
+        mSlider = getSlider(p5, (p5.windowWidth-p5.width)/2-80, 570, 0.0, 1.0)
 
         iWidth = 600;
         iHeight = 700;
@@ -42,7 +42,7 @@ const Molarity = () => {
 
         //dropdown
         sel = p5.createSelect();
-        sel.position((p5.windowWidth-p5.width)/2+p5.width/2 - 65, 110);
+        sel.position((p5.windowWidth-p5.width)/2+p5.width/2 - 65, 165);
         sel.style('background-color', 'rgb(128,155,127)');
         sel.style('border-radius', '3px');
         sel.style('width', '200px');
@@ -65,8 +65,8 @@ const Molarity = () => {
         molarity = Math.trunc(molarity*10000)/10000;
         
         p5.textFont("Comic Sans MS", 23);
-        p5.text("Volumn\n(Liters)", 25,42);
-        p5.text("Amount\n  (kg)", 160,42);
+        p5.text("Volumn\n(Liters)", 45,45);
+        p5.text("Amount\n  (kg)", 185,45);
         p5.text("Solute:", p5.width/2 - 15, 40);
         p5.text(solute, p5.width/2, p5.height/2);
         p5.text("Molarity", p5.width-p5.width/6,42);

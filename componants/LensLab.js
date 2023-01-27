@@ -1,9 +1,11 @@
 import React from "react";
 import dynamic from "next/dynamic";
+//import styles from "../styles/lensStyle.module.css";
 
 const Sketch = dynamic(() => import("react-p5").then((mod) => mod.default), {
     ssr: false,
 });
+
 let fSlider;
 let oSlider;
 let hSlider;
@@ -16,80 +18,80 @@ let draggingL, draggingO;
 
 const LensLab = (props) => {
     const setup = (p5, canvasParentRef) => {
-    let cnv = p5.createCanvas(1800, 790).parent(canvasParentRef);
-    height = p5.height;
-    width = p5.width;
-    fSlider = getSlider(p5, 150 + 40, height - 170 + 60, -300, 300);
-    oSlider = getSlider(p5, 150 + 253, height - 170 + 60, 50, 520);
-    hSlider = getSlider(p5, 150 + 453, height - 170 + 60, -145, 145);
-    cX = width / 2;
-    cY = height / 2;
+        let cnv = p5.createCanvas(1800, 790).parent(canvasParentRef);
+        height = p5.height;
+        width = p5.width;
+        fSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 40, height - 170 + 195, -300, 300);
+        oSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 250, height - 170 + 195, 50, 820);
+        hSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 445, height - 170 + 195, -145, 145);
+        cX = width / 2;
+        cY = height / 2;
 
-    draggingL = draggingO = 0;
+        draggingL = draggingO = 0;
 
-    btnSave = p5.createButton("Save Image");
-    btnSave.position(0, 0);
-    btnSave.style("width", "100px");
-    btnSave.style("height", "35px");
-    btnSave.style("color", "blue");
-    btnSave.mousePressed(() => {
-        p5.saveCanvas(cnv, "myCanvas", "jpg");
-    });
+        btnSave = p5.createButton("Save Image");
+        btnSave.position(253, 145);
+        btnSave.style("width", "100px");
+        btnSave.style("height", "35px");
+        btnSave.style("color", "blue");
+        btnSave.mousePressed(() => {
+            p5.saveCanvas(cnv, "myCanvas", "jpg");
+        });
 
-    cnv.mouseReleased(() => {
-        draggingL = 0;
-        draggingO = 0;
-    });
-    cnv.mousePressed(() => {
-        let mouseX = p5.mouseX;
-        let mouseY = p5.mouseY;
-        if (fSlider.value() > 0) {
-            let a = 30 + (150 - fSlider.value()) / 15;
-            let b = 300;
-            let d =
-            ((mouseX - cX) * (mouseX - cX)) / ((a * a) / 4.0) +
-            ((mouseY - cY) * (mouseY - cY)) / ((b * b) / 4.0) -
-            1;
+        cnv.mouseReleased(() => {
+            draggingL = 0;
+            draggingO = 0;
+        });
+        cnv.mousePressed(() => {
+            let mouseX = p5.mouseX;
+            let mouseY = p5.mouseY;
+            if (fSlider.value() > 0) {
+                let a = 30 + (150 - fSlider.value()) / 15;
+                let b = 300;
+                let d =
+                ((mouseX - cX) * (mouseX - cX)) / ((a * a) / 4.0) +
+                ((mouseY - cY) * (mouseY - cY)) / ((b * b) / 4.0) -
+                1;
 
-        if (d <= 0) {
+            if (d <= 0) {
+                p5.cursor("grab");
+                draggingL = 1;
+            } else {
+                p5.cursor(p5.ARROW);
+                draggingL = 0;
+            }
+        } else {
+            let x1 = cX - 15,
+            x2 = cX + 15,
+            y1 = cY - 150,
+            y2 = cY + 150;
+            if (x1 <= mouseX && mouseX <= x2 && y1 <= mouseY && mouseY <= y2) {
+                p5.cursor("grab");
+                draggingL = 1;
+            } else {
+                p5.cursor(p5.ARROW);
+                draggingL = 0;
+            }
+        }
+
+        if (draggingL == 1) {
+            return;
+        }
+        //Object Moving
+        let x = cX - oSlider.value();
+        let y1 = cY - hSlider.value(), y2 = cY;
+        if (y1 > y2) {
+            let tmp = y1;
+            y1 = y2;
+            y2 = tmp;
+        }
+        if (y1 <= mouseY && mouseY <= y2 && x - 5 <= mouseX && mouseX <= x + 5) {
             p5.cursor("grab");
-            draggingL = 1;
+            draggingO = 1;
         } else {
             p5.cursor(p5.ARROW);
-            draggingL = 0;
+            draggingO = 0;
         }
-    } else {
-        let x1 = cX - 15,
-        x2 = cX + 15,
-        y1 = cY - 150,
-        y2 = cY + 150;
-        if (x1 <= mouseX && mouseX <= x2 && y1 <= mouseY && mouseY <= y2) {
-            p5.cursor("grab");
-            draggingL = 1;
-        } else {
-            p5.cursor(p5.ARROW);
-            draggingL = 0;
-        }
-    }
-
-    if (draggingL == 1) {
-        return;
-    }
-      //Object Moving
-    let x = cX - oSlider.value();
-    let y1 = cY - hSlider.value(), y2 = cY;
-    if (y1 > y2) {
-        let tmp = y1;
-        y1 = y2;
-        y2 = tmp;
-    }
-    if (y1 <= mouseY && mouseY <= y2 && x - 5 <= mouseX && mouseX <= x + 5) {
-        p5.cursor("grab");
-        draggingO = 1;
-    } else {
-        p5.cursor(p5.ARROW);
-        draggingO = 0;
-    }
     });
 };
 
@@ -106,7 +108,7 @@ const draw = (p5) => {
 function getSlider(p5, x, y, mn, mx) {
     let mySlider;
     let myInput;
-    mySlider = p5.createSlider(mn, mx, (mx+mn+mx/2)/2.0, 0.1);
+    mySlider = p5.createSlider(mn, mx, mx, 0.1);
     mySlider.position(x, y);
     mySlider.style("width", "150px");
     myInput = p5.createInput(mySlider.value());
@@ -150,7 +152,7 @@ function createLens(p5) {
     }
     p5.strokeWeight(2);
     p5.stroke(0);
-    p5.line(5, cY, 1100, cY);
+    p5.line(5, cY, p5.width-5, cY);
     p5.fill(255, 102, 102);
     p5.stroke(0);
     p5.line(cX, cY - 148, cX, cY + 148);

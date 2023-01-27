@@ -1,10 +1,10 @@
 import Head from "next/head";
 import styles from "../../../styles/Home.module.css";
-import Molarity from "../../../componants/Molarity";
+import Cell from "../../../componants/Cell";
 import Navbar from "../../../componants/Navbar";
 import CenteredContainer from "../../../componants/CenteredContainer";
-import {ScrereRecording} from "../../../componants/ScreneRecording";
 import { useEffect, useState } from "react";
+import {ScrereRecording} from "../../../componants/ScreneRecording";
 
 export default function Home() {
     const [isTeacher, setIsTeacher] = useState(false);
@@ -49,7 +49,7 @@ export default function Home() {
             <div  style={{
                 margin:"250px"
             }}>
-                <Molarity />
+                <Cell />
             </div>
             </CenteredContainer>
             </div>
