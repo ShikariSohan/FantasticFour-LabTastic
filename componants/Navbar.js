@@ -43,7 +43,7 @@ export default function Navbar() {
             alignSelf: "center",
           }}
         >
-          <Logo size={20} weight={600} logoSize={"50px"} />
+          <Logo size={35} weight={700} logoSize={"50px"} />
         </div>
         {isLoggedIn === true && (
           <div
