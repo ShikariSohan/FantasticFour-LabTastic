@@ -9,6 +9,7 @@ import { Input } from "@mantine/core";
 import { IconSquarePlus } from "@tabler/icons";
 
 import { useRouter } from "next/router";
+import Stream from "../../componants/Stream";
 
 export default function Home(props) {
   const [opened, setOpened] = useState(false);
