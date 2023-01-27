@@ -1,6 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import styles from "../styles/lensStyle.module.css";
+//import styles from "../styles/lensStyle.module.css";
 
 const Sketch = dynamic(() => import("react-p5").then((mod) => mod.default), {
     ssr: false,
@@ -20,9 +20,9 @@ const LensLab = (props) => {
         let cnv = p5.createCanvas(1800, 790).parent(canvasParentRef);
         height = p5.height;
         width = p5.width;
-        fSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 40, height - 170 + 160, -300, 300);
-        oSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 253, height - 170 + 60, 50, 820);
-        hSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 453, height - 170 + 60, -145, 145);
+        fSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 40, height - 170 + 165, -300, 300);
+        oSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 250, height - 170 + 165, 50, 820);
+        hSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 445, height - 170 + 165, -145, 145);
         cX = width / 2;
         cY = height / 2;
 
