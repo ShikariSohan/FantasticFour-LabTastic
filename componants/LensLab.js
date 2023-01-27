@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 const Sketch = dynamic(() => import("react-p5").then((mod) => mod.default), {
     ssr: false,
 });
+
 let fSlider;
 let oSlider;
 let hSlider;
@@ -29,7 +30,7 @@ const LensLab = (props) => {
         draggingL = draggingO = 0;
 
         btnSave = p5.createButton("Save Image");
-        btnSave.position(0, 0);
+        btnSave.position(125, 110);
         btnSave.style("width", "100px");
         btnSave.style("height", "35px");
         btnSave.style("color", "blue");

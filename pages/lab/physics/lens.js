@@ -4,8 +4,27 @@ import Navbar from "../../../componants/Navbar";
 import CenteredContainer from "../../../componants/CenteredContainer";
 import {ScrereRecording} from "../../../componants/ScreneRecording";
 import LensLab from "../../../componants/LensLab";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+
+    const [isTeacher, setIsTeacher] = useState(false);
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+            if (user.isLoggedIn === undefined || user.isLoggedIn === false) {
+                router.push("/auth");
+            }
+            if (user.role === "teacher") {
+                setIsTeacher(true);
+            }
+        } else {
+            router.push("/auth");
+        }
+        
+    }, []);
+
 
     return (
         <div style={{
@@ -22,7 +41,7 @@ export default function Home() {
             <div style={{display:"block"}}>
                 
             <div>
-            <ScrereRecording></ScrereRecording>
+            {isTeacher && <ScrereRecording></ScrereRecording>}
             </div>
             
             
