@@ -13,9 +13,9 @@ import axios from "axios";
 import { Input } from "@mantine/core";
 import { IconSquarePlus } from "@tabler/icons";
 import { Radio } from "@mantine/core";
-
 import { useRouter } from "next/router";
 import CenteredContainer from "../../componants/CenteredContainer";
+import ScoreShow from "../../componants/ScoreShow";
 export default function Home(props) {
   const [opened, setOpened] = useState(false);
   const router = useRouter();
@@ -50,7 +50,8 @@ export default function Home(props) {
   const [score, setScore] = useState(0);
   const sendData = () => {
     const f = async () => {
-        router.push("/courses");
+        // router.push("/courses");
+        setOpened(true)
       try {
         const result = await axios.post(`/api/result/${id}`, {
           score,
@@ -108,6 +109,11 @@ export default function Home(props) {
               <Title order={3} size="h1">
                 Quiz -- Score - {task.questionSet.length}
               </Title>
+              <ScoreShow
+              opened={opened}
+              setOpened={setOpened}
+              score={score}
+            />
               <div
                 style={{
                   marginTop: "20px",
@@ -129,7 +135,9 @@ export default function Home(props) {
                             size="lg"
                             style={{ width: "100%" }}
                             onChange={(event) => {
-                              if (item.answer === event.target.value) {
+                              let a =item.answer;
+                              let b = event.target.value;
+                              if (a===b) {
                                 setScore(score + 1);
                               }
                             }}
@@ -138,7 +146,9 @@ export default function Home(props) {
                       </div>
                     );
                   })}
+
               </div>
+           
               <Button
                 sx={{
                   marginTop: "20px",
