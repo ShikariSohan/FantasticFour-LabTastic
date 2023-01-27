@@ -3,6 +3,7 @@ import styles from "../../../styles/Home.module.css";
 import Molarity from "../../../componants/Molarity";
 import Navbar from "../../../componants/Navbar";
 import CenteredContainer from "../../../componants/CenteredContainer";
+import { ScrereRecording } from "../../../componants/ScreneRecording";
 export default function Home() {
 
     return (
@@ -13,7 +14,7 @@ export default function Home() {
             </Head>
 
             <Navbar />
-            
+            <ScrereRecording></ScrereRecording>
             <div  style={{
                 margin:"250px"
             }}>
