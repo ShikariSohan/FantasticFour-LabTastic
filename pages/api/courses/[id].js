@@ -1,5 +1,7 @@
+import { IconTallymarks } from "@tabler/icons";
 import dbConnect from "../../../middleware/dbConnect";
 import Classroom from "../../../model/Classroom";
+import Task from "../../../model/Task";
 import jwt from "jsonwebtoken";
 export default async function handler(req, res) {
   const { method } = req;
@@ -13,8 +15,8 @@ export default async function handler(req, res) {
         const { id } = req.query;
         console.log(id);
         const classroom = await Classroom.findOne({ _id: id });
-        console.log(classroom);
-        res.status(200).json({ success: true, data: classroom });
+        const stream = await Task.find({ classroom: id });
+        res.status(200).json({ success: true,  classroom,stream });
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });

@@ -80,10 +80,7 @@ export default function NewCourseModal({ opened, setOpened }) {
           searchable
           maxDropdownHeight={400}
           nothingFound="Nobody here"
-          filter={(value, item) =>
-            item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
-            item.description.toLowerCase().includes(value.toLowerCase().trim())
-          }
+         
           onChange={(value) => {
             setClassroom({ ...classroom, subject: value });
           }}

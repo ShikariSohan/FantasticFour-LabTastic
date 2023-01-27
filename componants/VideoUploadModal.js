@@ -89,7 +89,7 @@ export default function VideoUploadModal({ opened, setOpened, id }) {
           multiple
           onChange={(files) => setFiles(files)}
         />
-        <Button color="green">Upload</Button>
+      
         <Title order={4}>Instruction</Title>
         <Editor
           value={instruction}
