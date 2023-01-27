@@ -2,6 +2,7 @@ import { Modal, TextInput, Button, Group } from "@mantine/core";
 import { forwardRef } from "react";
 import { Avatar, Text, Select } from "@mantine/core";
 import { useState } from "react";
+import axios from "axios";
 const data = [
   {
     image: "https://img.icons8.com/clouds/256/000000/futurama-bender.png",
@@ -18,11 +19,6 @@ const data = [
     image: "https://img.icons8.com/clouds/256/000000/homer-simpson.png",
     label: "Chemistry",
     value: "chemistry",
-  },
-  {
-    image: "https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png",
-    label: "Mathematics",
-    value: "mathematics",
   },
 ];
 const SelectItem = forwardRef(
@@ -43,8 +39,16 @@ export default function NewCourseModal({ opened, setOpened }) {
     name: "",
     session: "",
     subject: "",
-    code: "123123",
   });
+  const addClassroom = async () => {
+    try {
+      const result = await axios.post("/api/courses", classroom);
+      setOpened(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Modal
       title="Add New Classroom"
@@ -56,7 +60,7 @@ export default function NewCourseModal({ opened, setOpened }) {
       <div style={{ padding: 20 }}>
         <TextInput
           placeholder="ex : Ratan Sir Biology Lab"
-          label="Classroom Title"
+          label="Class Title"
           onChange={(e) => {
             setClassroom({ ...classroom, name: e.target.value });
           }}
@@ -90,10 +94,7 @@ export default function NewCourseModal({ opened, setOpened }) {
             sx={{ marginTop: 30 }}
             variant="gradient"
             gradient={{ from: "indigo", to: "cyan" }}
-            onClick={() => {
-              console.log(classroom);
-            }}
-
+            onClick={addClassroom}
           >
             Add Course
           </Button>
