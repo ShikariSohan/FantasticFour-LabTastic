@@ -1,9 +1,9 @@
 import Head from "next/head";
 import styles from "../../../styles/Home.module.css";
-import Molarity from "../../../componants/Molarity";
 import Navbar from "../../../componants/Navbar";
 import CenteredContainer from "../../../componants/CenteredContainer";
 import {ScrereRecording} from "../../../componants/ScreneRecording";
+import LensLab from "../../../componants/LensLab";
 
 export default function Home() {
 
@@ -25,18 +25,12 @@ export default function Home() {
             <ScrereRecording></ScrereRecording>
             </div>
             
-            <div  style={{
-                margin:"650px"
-            }}>
+            
             <CenteredContainer >
-            <div  style={{
-                margin:"250px"
-            }}>
-                <Molarity />
-            </div>
+            
+                <LensLab />
+            
             </CenteredContainer>
-            </div>
-           
             </div>
             
         </div>

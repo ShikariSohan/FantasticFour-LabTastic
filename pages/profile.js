@@ -37,6 +37,7 @@ export default function Profile() {
         {/* <ScrereRecording></ScrereRecording>
         <VideoPlayer url="https://firebasestorage.googleapis.com/v0/b/test-3ce96.appspot.com/o/Lab%20Practice04_24_12.mp4?alt=media&token=9a18ceb2-0dbb-4517-836e-1abd510ee725"></VideoPlayer> */}
         <CenteredContainer>
+        <ScrereRecording></ScrereRecording>
         <Card
             
             shadow="lg"
