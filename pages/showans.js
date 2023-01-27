@@ -44,7 +44,7 @@ function Ans({question,ans,actual,myid}){
         </Card>
     )
 }
-const json=[
+const json1=[
     {
         "_id": "63d3e81b748ec1f25e01b65e",
         "student": "1002",
@@ -69,11 +69,24 @@ const json=[
 ];
 
 let apiReq ={
-    taskId:"1001",
-    studentId:"1001"
+    taskId:"1002",
+    studentId:"1002"
 };
 export default function Showans() {
+    const [json,setState] = useState(0);
+  useEffect(()=>{
+       axios
+      .post("/api/courses/result", apiReq)
+      .then(function (res) {
+        setState(res.data.data);
 
+      })
+      .catch(function (e) {
+        console.log(e);
+      }
+
+      )});
+  
   return (
     
     <div
@@ -98,9 +111,9 @@ export default function Showans() {
     
       <div className={styles.Row}><h1>Quiz:01</h1><div style={{margin:"100px"}}></div><div id="result" > <h1>Marks :00</h1></div></div>
       <div>
-        <Ans myid={json[0].questionSet[0].question} question={json[0].questionSet[0].title} ans={json[0].questionSet[0].answer} actual={json[0].questionSet[0].actual}></Ans>
-        <Ans myid={json[0].questionSet[1].question} question={json[0].questionSet[1].title} ans={json[0].questionSet[1].answer} actual={json[0].questionSet[1].actual}></Ans>
-      </div>
+        <Ans myid={json1[0].questionSet[0].question} question={json1[0].questionSet[0].title} ans={json1[0].questionSet[0].answer} actual={json1[0].questionSet[0].actual}></Ans>
+        <Ans myid={json1[0].questionSet[1].question} question={json1[0].questionSet[1].title} ans={json1[0].questionSet[1].answer} actual={json1[0].questionSet[1].actual}></Ans>
+     </div>
       
       <div className={styles.Row}>
       <Button

@@ -13,7 +13,6 @@ export default async function handler(req, res) {
             const { taskId,studentId } = req.body;
             const all = await Result.find({})
             const ans =[];
-            // console.log(classes[0].students.length);
             for(let i=0;i<all.length;i++){
                 if(all[i].student===studentId&&all[i].task===taskId){
                     ans.push(all[i]);
