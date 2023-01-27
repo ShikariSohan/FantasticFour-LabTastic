@@ -1,5 +1,6 @@
 import styles from "../styles/sr.module.css";
 import React, { useState, useEffect } from 'react';
+import { BackgroundImage } from "@mantine/core";
 function Mybutton({type,click}){
     if(type==="Start"){
       return(<div onClick={click}>
@@ -95,25 +96,24 @@ export  function ScrereRecording (){
       return (
         <div >
           <Mybutton type="Start" click={state.start}>start</Mybutton><Mybutton type="Stop" click={state.stop}>start</Mybutton>
-          <button onClick ={()=>{
+          <div style={{ 
+      backgroundImage: `url("/download.png")`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "contain",
+      height: "50px",
+      width: "50px" 
+    }}  onClick ={()=>{
               download(url);
-          }}>download</button>
-          <button onClick={()=>{
-                      mystream.getTracks().forEach(function(track) {
-                          if (track.readyState == 'live') {
-                              track.stop();
-                          }
-                      });
-                      myaudio.getTracks().forEach(function(track) {
-                        if (track.readyState == 'live') {
-                            track.stop();
-                        }
-                    }); 
-                        setState({mode:0,start:null,stop: null});
-          }}>Stop Sharing</button>
-          <button onClick={()=>{
+          }}></div>
+          <div style={{ 
+      backgroundImage: `url("/upload.png")`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "contain",
+      height: "50px",
+      width: "50px" 
+    }} onClick={()=>{
               upload(myfile);
-          }}>upload</button>
+          }}></div>
           
         </div>
         
