@@ -9,14 +9,6 @@ import { Button, Card, Stack, Text, Dialog, Alert, Flex, Center, JsonInput } fro
 import Image from "next/image";
 import axios from "axios";
 function Ans({question,ans,actual,myid}){
-    useEffect(()=>{
-        const fetchData = async ()=>{
-            const data = await axios.post("/api/courses/result",{
-                taskId : taskId,
-                
-            })
-        }
-    })
     return (
         <Card
             
@@ -46,16 +38,42 @@ function Ans({question,ans,actual,myid}){
             justifyContent:"center",
             alignItems:"center"
             }}>
-            <div  className={styles.Row}><p> "Submited Answer :{ans}</p></div>
-            <div  className={styles.Row}><p> "Actual Answer :{actual}</p></div>
+            <div  className={styles.Row}><p> Submited Answer :{ans}</p></div>
+            <div  className={styles.Row}><p> Actual Answer :{actual}</p></div>
         </div>
         </Card>
     )
 }
-const json=[{id:"1001",question:"Q1:What is your name? lalalalalal sjbdjshajashsxhjkawkhdhdhjn ",ans:"sohan",actual:"kawsar"},
-{id:"1002",question:"Q1:What is your Hobby? lalalalalal sjbdjshajashsxhjkawkhdhdhjn ",ans:"blablabla",actual:"klaklakla"}]
-export default function Profile() {
-  var marks=[];
+const json=[
+    {
+        "_id": "63d3e81b748ec1f25e01b65e",
+        "student": "1002",
+        "task": "1002",
+        "questionSet": [
+            {
+                "_id": "63d3f413154dfab6da18e5a9",
+                "question": "1001",
+                "title": "What is your name ?",
+                "answer": "sohan",
+                "actual": "kawsar"
+            },
+            {
+                "_id": "63d3f413154dfab6da18e5aa",
+                "question": "1002",
+                "title": "What is your hobby ?",
+                "answer": "blanla",
+                "actual": "blanla"
+            }
+        ]
+    }
+];
+
+let apiReq ={
+    taskId:"1001",
+    studentId:"1001"
+};
+export default function Showans() {
+
   return (
     
     <div
@@ -79,10 +97,10 @@ export default function Profile() {
         }}>
     
       <div className={styles.Row}><h1>Quiz:01</h1><div style={{margin:"100px"}}></div><div id="result" > <h1>Marks :00</h1></div></div>
-      <Ans myid="1001" question="Q1:What is your name? lalalalalal sjbdjshajashsxhjkawkhdhdhjn " ans="sohan" actual="kawsar"></Ans>
-      
-      <Ans myid="1002" question="Q1:What is your Hobby? lalalalalal sjbdjshajashsxhjkawkhdhdhjn " ans="blablabla" actual="klaklakla"></Ans>
-    
+      <div>
+        <Ans myid={json[0].questionSet[0].question} question={json[0].questionSet[0].title} ans={json[0].questionSet[0].answer} actual={json[0].questionSet[0].actual}></Ans>
+        <Ans myid={json[0].questionSet[1].question} question={json[0].questionSet[1].title} ans={json[0].questionSet[1].answer} actual={json[0].questionSet[1].actual}></Ans>
+      </div>
       
       <div className={styles.Row}>
       <Button
@@ -93,19 +111,15 @@ export default function Profile() {
             mt="xl"
             margin='5px'
             onClick={()=>{
-                marks=[];
                 let ans=0;
-                for(let i=0;i<json.length;i++){
+                let js=json[0].questionSet;
+                for(let i=0;i<js.length;i++){
 
-                    if(json[i].ans.trim()==json[i].actual.trim()){
-                        marks.push({id:json[0].id,marks:1});
+                    if(js[i].answer.trim()==js[i].actual.trim()){
                         ans++;
-                    }else{
-                        marks.push({id:json[0].id,marks:0});
                     }
                 }
-                console.log(marks)
-            document.getElementById("result").innerHTML="<h1>Marks:"+ans+" out of "+json.length+"</h1>"
+            document.getElementById("result").innerHTML="<h1>Marks:"+ans+" out of "+js.length+"</h1>"
             }}
           >Auto Calculate</Button>
           <div style={{margin:"20px"}}></div>
@@ -116,17 +130,14 @@ export default function Profile() {
             radius="md"
             mt="xl"
             onClick={()=>{
-                marks=[];
                 let ans=0;
-                
-                for(let i=0;i<json.length;i++){
-                    marks.push({id:json[0].id,marks:parseInt(document.getElementById(json[i].id).value)});
-                    ans=ans+parseInt(document.getElementById(json[i].id).value);
-                    document.getElementById(json[i].id).value="";
+                let js=json[0].questionSet;
+                for(let i=0;i<js.length;i++){
+                    ans=ans+parseInt(document.getElementById(js[i].question).value);
+                    document.getElementById(js[i].question).value="";
                 }
-                document.getElementById("result").innerHTML="<h1>Marks:"+ans+" out of "+json.length+"</h1>"
+                document.getElementById("result").innerHTML="<h1>Marks:"+ans+" out of "+js.length+"</h1>"
 
-            console.log(marks)
             }}
           >Calculate</Button>
       </div>
