@@ -56,7 +56,6 @@ const json=[{id:"1001",question:"Q1:What is your name? lalalalalal sjbdjshajashs
 {id:"1002",question:"Q1:What is your Hobby? lalalalalal sjbdjshajashsxhjkawkhdhdhjn ",ans:"blablabla",actual:"klaklakla"}]
 export default function Profile() {
   var marks=[];
-  useEffect()
   return (
     
     <div
