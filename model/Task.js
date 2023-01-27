@@ -15,6 +15,11 @@ const classroomSchema = new mongoose.Schema({
     {
       question: String,
       answer: String,
+      options: [
+        {
+          type: String,
+        },
+      ],
     },
   ],
   classroom: {

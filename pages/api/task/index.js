@@ -8,6 +8,7 @@ export default async function handler(req, res) {
   switch (method) {
     case "POST":
       try {
+        console.log(req.body);
         const data = await Task.create(req.body);
         res.status(201).json({ success: true, data: data });
       } catch (error) {

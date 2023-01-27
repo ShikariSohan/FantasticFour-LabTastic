@@ -12,6 +12,7 @@ import CourseCard from "../../componants/CourseCard";
 import axios from "axios";
 import { Input } from "@mantine/core";
 import { IconSquarePlus } from "@tabler/icons";
+import { Radio } from "@mantine/core";
 
 import { useRouter } from "next/router";
 import CenteredContainer from "../../componants/CenteredContainer";
@@ -45,7 +46,22 @@ export default function Home(props) {
     };
     f();
   }, []);
-
+  const [checked, setChecked] = useState(false);
+  const [score, setScore] = useState(0);
+  const sendData = () => {
+    const f = async () => {
+      try {
+        const result = await axios.post(`/api/result/${id}`, {
+          score,
+          user: JSON.parse(localStorage.getItem("user"))._id,
+        });
+        console.log(result);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    f();
+  };
   return (
     <div
       style={{
@@ -89,7 +105,7 @@ export default function Home(props) {
             {/* </AspectRatio> */}
             <div>
               <Title order={3} size="h1">
-                Quiz
+                Quiz -- Score - {score}
               </Title>
               <div
                 style={{
@@ -104,19 +120,18 @@ export default function Home(props) {
                         <Title order={6} size="h4">
                           Question:
                         </Title>
-                        <TypographyStylesProvider>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: JSON.stringify(item.question),
-                            }}
-                          />
-                        </TypographyStylesProvider>
+                        <p>{item.question}</p>
                         <div>
                           <Input
                             placeholder="Answer"
                             variant="filled"
                             size="lg"
                             style={{ width: "100%" }}
+                            onChange={(event) => {
+                              if (item.answer === event.target.value) {
+                                setScore(score + 1);
+                              }
+                            }}
                           />
                         </div>
                       </div>
@@ -124,13 +139,14 @@ export default function Home(props) {
                   })}
               </div>
               <Button
-                sx={
-                    {
-                        marginTop: "20px",
-                        marginLeft: "100px",
-                    }
-                }
-              >Submit</Button>
+                sx={{
+                  marginTop: "20px",
+                  marginLeft: "100px",
+                }}
+                onClick={sendData}
+              >
+                Submit
+              </Button>
             </div>
           </div>
         )}

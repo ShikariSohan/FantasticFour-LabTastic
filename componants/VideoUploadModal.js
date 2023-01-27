@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, Button, Title } from "@mantine/core";
+import { Modal, Button, Title, TextInput, Radio } from "@mantine/core";
 import { FileInput } from "@mantine/core";
 import { storage } from "../middleware/Firebase";
 import axios from "axios";
@@ -24,7 +24,7 @@ const Editor = dynamic(() => import("@mantine/rte"), {
 export default function VideoUploadModal({ opened, setOpened, id }) {
   const [files, setFiles] = useState([]);
   const [instruction, setInstruction] = useState("");
-
+  const [type, setType] = useState("mcq");
   const uploadImage = (props) => {
     console.log(files);
     if (files.length !== 0) {
@@ -50,7 +50,27 @@ export default function VideoUploadModal({ opened, setOpened, id }) {
               name: "New Task",
             };
             try {
-            console.log(task)
+              let qq = [];
+              for (let i = 0; i < qset.length; i++) {
+                let questionText = qset[i].question;
+                let options = [
+                  {
+                    answerText: qset[i].answer,
+                    isCorrect: true,
+                  },
+                ];
+                for (let j = 0; j < qset[i].options.length; j++) {
+                  options.push({
+                    answerText: qset[i].options[j],
+                    isCorrect: false,
+                  });
+                }
+                qq.push({
+                  questionText: questionText,
+                  options: options,
+                });
+              }
+              localStorage.setItem("questions", JSON.stringify(qq));
               axios.post("/api/task", task).then((res) => {
                 setQset([]);
                 setOpened(false);
@@ -72,7 +92,9 @@ export default function VideoUploadModal({ opened, setOpened, id }) {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [qset, setQset] = useState([]);
-
+  const [options, setOptions] = useState([]);
+  const [option, setOption] = useState("");
+  const [checked, setChecked] = useState(false);
   return (
     <>
       <Modal
@@ -90,7 +112,7 @@ export default function VideoUploadModal({ opened, setOpened, id }) {
           multiple
           onChange={(files) => setFiles(files)}
         />
-      
+
         <Title order={4}>Instruction</Title>
         <Editor
           value={instruction}
@@ -98,55 +120,84 @@ export default function VideoUploadModal({ opened, setOpened, id }) {
           id="rte"
           controls={configureRte}
         />
+
         <Title order={4}>Quiz</Title>
-        {qset.length !== 0 &&
-          qset.map((q) => (
-            <div>
-              <div>
-                <p>Question:</p>
-                <TypographyStylesProvider>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: JSON.stringify(q.question),
-                    }}
-                  />
-                </TypographyStylesProvider>
-              </div>
-              <div>
-                <p>Answer:</p>
-                <TypographyStylesProvider>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: JSON.stringify(q.answer),
-                    }}
-                  />
-                </TypographyStylesProvider>
-              </div>
-            </div>
-          ))}
+        <Title order={5}>Type: {type}</Title>
+
         <Title order={6}>Question: </Title>
-        <Editor
-          value={question}
-          onChange={setQuestion}
-          id="rte2"
-          controls={configureRte}
+        <TextInput
+          label="enter question"
+          placeholder="Enter question"
+          inputWrapperOrder={["label", "error", "input", "description"]}
+          onChange={(e) => {
+            setQuestion(e.target.value);
+          }}
         />
         <Title order={6}>Answer: </Title>
-        <Editor
-          value={answer}
-          onChange={setAnswer}
-          id="rte1"
-          controls={configureRte}
+        <TextInput
+          label="Enter Answer"
+          placeholder="Enter Answer"
+          inputWrapperOrder={["label", "error", "input", "description"]}
+          onChange={(e) => {
+            setAnswer(e.target.value);
+          }}
         />
+        <Title order={6}>Add Options </Title>
+        {options.map((op, key) => (
+          <p>
+            {key + 1}
+            {"  "}
+            {op}
+          </p>
+        ))}
+        <TextInput
+          label="enter option 1"
+          placeholder="Enter option 1"
+          inputWrapperOrder={["label", "error", "input", "description"]}
+          onChange={(e) => {
+            setOption(e.target.value);
+          }}
+        />
+
+        <Button
+          onClick={() => {
+            setOptions((oldArray) => [...oldArray, option]);
+            console.log(options);
+          }}
+        >
+          Add Option
+        </Button>
         <Button
           variant="outline"
           size="xs"
           onClick={() => {
-            setQset((oldArray) => [...oldArray, { question, answer }]);
+            setQset((oldArray) => [...oldArray, { question, options, answer }]);
+            setOptions([]);
           }}
         >
           Add Question
         </Button>
+        <Title order={6}>Question Set </Title>
+        {qset.map((q, key) => (
+          <div>
+            <p>
+              Q{key + 1}
+              {" : "}
+              {q.question}
+            </p>
+            <p>
+              A{" : "}
+              {q.answer}
+            </p>
+            {q.options.map((op, key) => (
+              <p>
+                {key + 1}
+                {"  "}
+                {op}
+              </p>
+            ))}
+          </div>
+        ))}
         <Button color="teal" onClick={uploadImage}>
           Submit
         </Button>
