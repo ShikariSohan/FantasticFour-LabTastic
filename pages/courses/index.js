@@ -1,15 +1,14 @@
 import Head from "next/head";
 import Navbar from "../../componants/Navbar";
-import { Button } from "@mantine/core";
 import NewCourseModal from "../../componants/NewCourseModal";
 import { useEffect, useState } from "react";
 import CourseCard from "../../componants/CourseCard";
 import axios from "axios";
 import { Input } from "@mantine/core";
 import { IconSquarePlus } from "@tabler/icons";
-
 import { useRouter } from "next/router";
-import Stream from "../../componants/Stream";
+import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
+
 
 export default function Home(props) {
   const [opened, setOpened] = useState(false);
@@ -127,6 +126,64 @@ export default function Home(props) {
           alignItems: "center",
         }}
       >
+      
+
+      {!courses.length  && !isTeacher && (
+
+          <div style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }} >
+            
+            <Card shadow="s"  p="lg" radius="md" withBorder>
+            <Card.Section>
+            <Image
+              src="/sad2.png"
+              height={200}
+              alt="No way!"
+            />
+            </Card.Section>
+            <Text fz="xl" weight={500}>Opps! you haven't joined any classes!</Text>
+
+            <Text size="xl" color="dimmed">
+                Ask your teacher to get classroom code.
+            </Text>
+
+            </Card>
+            
+          </div>
+      )}
+
+{!courses.length  && isTeacher && (
+
+<div style={{
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+}} >
+  
+  <Card shadow="s"  p="lg" radius="md" withBorder>
+  <Card.Section>
+  <Image
+    src="/excla.png"
+    height={240}
+    alt="No way!"
+  />
+  </Card.Section>
+  <Text fz="xl" weight={500}>Opps! you haven't created any classes!</Text>
+  <Text size="xl" color="dimmed">
+      Create a new class and share the class<br></br> code with students to collaborate.
+  </Text>
+  </Card>
+  
+  
+</div>
+)}
+      
+
         {courses.map((course) => (
           <CourseCard key={course._id} course={course} />
         ))}
