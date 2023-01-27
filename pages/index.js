@@ -1,7 +1,89 @@
 import Head from "next/head";
 import Navbar from "../componants/Navbar";
-import { useEffect } from "react";
+import CenteredContainer from "../componants/CenteredContainer";
+import { createStyles, Title, SimpleGrid, Text, Button, ThemeIcon, Grid, Col } from '@mantine/core';
+import { IconFlask,IconReceiptOff, IconFlame, IconCircleDotted, IconFileCode } from '@tabler/icons';
+import { useEffect, useState } from "react";
+import {useRouter} from "next/router";
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    padding: `${theme.spacing.xl * 2}px ${theme.spacing.xl}px`,
+  },
+
+  title: {
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontSize: 36,
+    fontWeight: 900,
+    lineHeight: 1.1,
+    marginBottom: theme.spacing.md,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+  },
+}));
+
+const features = [
+  {
+    icon: IconFlask,
+    title: 'Experiment demonstrations',
+    description: 'Our platform will provide experiments according to the syllabus. Teachers will demonstrate those experiments to students.',
+  },
+  {
+    icon: IconFileCode,
+    title: 'Quizzes and assignments',
+    description: 'Teachers can create quizzes and assignments based on the experiments and other course material, and students can submit their answers through the platform.',
+  },
+  {
+    icon: IconReceiptOff,
+    title: 'Grading and feedback',
+    description:
+      'Teachers can grade quizzes and assignments and provide feedback to students through the platform.',
+  },
+  {
+    icon: IconFlame,
+    title: 'Interactive elements',
+    description:
+      'The platform will include interactive experiments so that students can visualize the practicals.',
+  },
+];
+
+
 export default function Home() {
+
+  const [isLogged, setIsLogged] = useState(false);
+  const router  = useRouter();
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+            if (user.isLoggedIn === undefined || user.isLoggedIn === false) {
+                setIsLogged(false);
+            }
+            else {
+                setIsLogged(true);
+            }
+        } 
+    }, []);
+
+  const { classes } = useStyles();
+
+  const items = features.map((feature) => (
+    <div key={feature.title}>
+      <ThemeIcon
+        size={44}
+        radius="md"
+        variant="gradient"
+        gradient={{ deg: 133, from: 'blue', to: 'cyan' }}
+      >
+        <feature.icon size={26} stroke={1.5} />
+      </ThemeIcon>
+      <Text size="lg" mt="sm" weight={500}>
+        {feature.title}
+      </Text>
+      <Text color="dimmed" size="sm">
+        {feature.description}
+      </Text>
+    </div>
+  ));
+  
   return (
     <div
       style={{
@@ -17,8 +99,60 @@ export default function Home() {
       </Head>
       <Navbar />
       <main>
-        <p>Lab Tastic</p>
+
+      <CenteredContainer>
+      
+      <div className={classes.wrapper}>
+      <Grid gutter={80}>
+        <Col span={12} md={5}>
+          <Title className={classes.title} order={2}>
+          Welcome to LabTastic: Online Practical Class Platform for Schoolgoers!
+          </Title>
+          <Text color="dimmed">
+          It aims to significantly improve the education experience for students, particularly those with limited access to equipment and resources, and level the playing field for students at different schools.
+          </Text>
+
+          {isLogged && (<Button
+            variant="gradient"
+            gradient={{ deg: 133, from: 'blue', to: 'cyan' }}
+            size="lg"
+            radius="md"
+            mt="xl"
+            onClick={()=>{
+              router.push('/courses');
+            }}
+          >
+            Go To Dashboard
+          </Button>)}
+
+          { !isLogged && (<Button
+            variant="gradient"
+            gradient={{ deg: 133, from: 'blue', to: 'cyan' }}
+            size="lg"
+            radius="md"
+            mt="xl"
+            onClick={()=>{
+              router.push('/auth');
+            }}
+          >
+            Sign Up
+          </Button>)}
+
+          
+        </Col>
+        <Col span={12} md={7}>
+          <SimpleGrid cols={2} spacing={30} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
+            {items}
+          </SimpleGrid>
+        </Col>
+      </Grid>
+    </div>
+      
+      
+      </CenteredContainer>
+
       </main>
+
     </div>
   );
 }
