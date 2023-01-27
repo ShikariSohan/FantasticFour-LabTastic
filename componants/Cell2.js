@@ -111,8 +111,6 @@ const Cell2 = () => {
         p5.fill(255,180)
         p5.stroke(0, 64, 255)
 
-        p5.text(p5.mouseX, 100, 100);
-        p5.text(p5.mouseY, 130, 100);
 
         for(let i=0;i<10;i++)
         {   
@@ -160,7 +158,9 @@ const Cell2 = () => {
               p5.image(zoomed, p5.mouseX-150, p5.mouseY-150,300,300)
             }
             else p5.cursor(p5.ARROW)
-        }  
+        }
+        p5.text(p5.mouseX, 100, 100);
+        p5.text(p5.mouseY, 130, 100);  
     }
     function addTags(p5) {
         p5.fill(255,180)

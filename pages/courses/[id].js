@@ -3,6 +3,7 @@ import Navbar from "../../componants/Navbar";
 import { Button, Text } from "@mantine/core";
 import NewCourseModal from "../../componants/NewCourseModal";
 import { useEffect, useState } from "react";
+import Stream from "../../componants/Stream";
 import axios from "axios";
 import { useRouter } from "next/router";
 import CodeModal from "../../componants/CodeModal";
@@ -10,9 +11,26 @@ import LabSelectModal from "../../componants/LabSelectModal";
 import VideoUploadModal from "../../componants/VideoUploadModal";
 import StudentTable from "../../componants/StudentInfo";
 export default function Home(props) {
+  const [isTeacher, setIsTeacher] = useState(false);
+
+  useEffect(() => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+          if (user.isLoggedIn === undefined || user.isLoggedIn === false) {
+              router.push("/auth");
+          }
+          if (user.role === "teacher") {
+              setIsTeacher(true);
+          }
+      } else {
+          router.push("/auth");
+      }
+      
+  }, []);
+
+
   const router = useRouter();
   const { id } = router.query;
-  const [isTeacher, setIsTeacher] = useState(false);
   const [openVideoModal, setOpenVideoModal] = useState(false);
   const [codeModal, setCodeModal] = useState(false);
   const [labDemo, setLabDemo] = useState(false);
@@ -131,7 +149,7 @@ export default function Home(props) {
         subject={course.subject}
       />
       <VideoUploadModal opened={openVideoModal} setOpened={setOpenVideoModal} id={id} />
-      <StudentTable/>
+      <Stream />
     </div>
   );
 }
