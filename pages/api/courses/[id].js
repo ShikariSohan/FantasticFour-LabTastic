@@ -1,6 +1,7 @@
 import { IconTallymarks } from "@tabler/icons";
 import dbConnect from "../../../middleware/dbConnect";
 import Classroom from "../../../model/Classroom";
+import User from "../../../model/User";
 import Task from "../../../model/Task";
 import jwt from "jsonwebtoken";
 export default async function handler(req, res) {
@@ -14,9 +15,16 @@ export default async function handler(req, res) {
       try {
         const { id } = req.query;
         console.log(id);
-        const classroom = await Classroom.findOne({ _id: id });
+        const classroom = await Classroom.findOne({ _id: id }).populate();
         const stream = await Task.find({ classroom: id });
-        res.status(200).json({ success: true,  classroom,stream });
+        let students = [];
+        for (let i = 0; i < classroom.students.length; i++) {
+          let x = await User.findOne({
+            _id: classroom.students[i],
+          });
+          students.push(x);
+        }
+        res.status(200).json({ success: true, classroom, stream,students });
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });

@@ -4,56 +4,56 @@ import { IconPencil, IconTrash } from "@tabler/icons";
 const mockData = [
   {
     name: "John Doe",
-    email:"john@gmail.com",
+    email: "john@gmail.com",
     totalAttendance: 20,
     totalAbsent: 2,
     addedOn: "2021-05-01",
   },
   {
     name: "John Doe",
-    email:"john@gmail.com",
+    email: "john@gmail.com",
     totalAttendance: 20,
     totalAbsent: 2,
     addedOn: "2021-05-01",
   },
   {
     name: "Muhit Mahmud al farhan bin al Rahman",
-    email:"john@gmail.com",
+    email: "john@gmail.com",
     totalAttendance: 20,
     totalAbsent: 2,
     addedOn: "2021-05-01",
   },
   {
     name: "John Doe",
-    email:"john@gmail.com",
+    email: "john@gmail.com",
     totalAttendance: 20,
     totalAbsent: 2,
     addedOn: "2021-05-01",
   },
   {
     name: "John Doe",
-    email:"john@gmail.com",
+    email: "john@gmail.com",
     totalAttendance: 20,
     totalAbsent: 2,
     addedOn: "2021-05-01",
   },
   {
     name: "John Doe",
-    email:"john@gmail.com",
+    email: "john@gmail.com",
     totalAttendance: 20,
     totalAbsent: 2,
     addedOn: "2021-05-01",
   },
   {
     name: "John Doe",
-    email:"john@gmail.com",
+    email: "john@gmail.com",
     totalAttendance: 20,
     totalAbsent: 2,
     addedOn: "2021-05-01",
   },
 ];
 
-export default function StudentTable() {
+export default function StudentTable(props) {
   const ths = (
     <tr>
       <th>Name</th>
@@ -63,12 +63,12 @@ export default function StudentTable() {
     </tr>
   );
 
-  const rows = mockData.map((element) => (
-    <tr key={element.registrationNo}>
+  const rows = props.students.map((element) => (
+    <tr key={element.mail}>
       <td>{element.name}</td>
       <td>{element.email}</td>
-      <td>{element.totalAttendance}</td>
-    <td>{element.totalAbsent}</td>
+      <td>20</td>
+      <td>2</td>
     </tr>
   ));
   return (

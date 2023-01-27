@@ -44,12 +44,13 @@ export default function VideoUploadModal({ opened, setOpened, id }) {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             const task = {
               url: url,
-              question: qset,
+              questionSet: qset,
               instruction: instruction,
               classroom: id,
               name: "New Task",
             };
             try {
+            console.log(task)
               axios.post("/api/task", task).then((res) => {
                 setQset([]);
                 setOpened(false);
