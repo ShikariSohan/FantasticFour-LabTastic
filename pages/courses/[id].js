@@ -12,22 +12,19 @@ import VideoUploadModal from "../../componants/VideoUploadModal";
 import StudentTable from "../../componants/StudentInfo";
 export default function Home(props) {
   const [isTeacher, setIsTeacher] = useState(false);
-
   useEffect(() => {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (user) {
-          if (user.isLoggedIn === undefined || user.isLoggedIn === false) {
-              router.push("/auth");
-          }
-          if (user.role === "teacher") {
-              setIsTeacher(true);
-          }
-      } else {
-          router.push("/auth");
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      if (user.isLoggedIn === undefined || user.isLoggedIn === false) {
+        router.push("/auth");
       }
-      
+      if (user.role === "teacher") {
+        setIsTeacher(true);
+      }
+    } else {
+      router.push("/auth");
+    }
   }, []);
-
 
   const router = useRouter();
   const { id } = router.query;
@@ -40,6 +37,7 @@ export default function Home(props) {
     subject: "",
     session: "",
   });
+  const [stream, setStream] = useState([]);
   const [show, setShow] = useState("stream");
 
   useEffect(() => {
@@ -58,12 +56,15 @@ export default function Home(props) {
   useEffect(() => {
     if (id) {
       axios.get(`/api/courses/${id}`).then((res) => {
-        setCourse({ ...course, ...res.data.data });
+        setCourse({ ...res.data.classroom });
+        console.log(res.data);
+      });
+      axios.get(`/api/courses/${id}`).then((res) => {
+        setStream(res.data.stream);
         console.log(res.data);
       });
     }
   }, [id]);
-
 
   return (
     <div
@@ -148,8 +149,17 @@ export default function Home(props) {
         setOpened={setLabDemo}
         subject={course.subject}
       />
-      <VideoUploadModal opened={openVideoModal} setOpened={setOpenVideoModal} id={id} />
-      <Stream />
+      <VideoUploadModal
+        opened={openVideoModal}
+        setOpened={setOpenVideoModal}
+        id={id}
+      />
+      {stream.length > 0 &&
+        stream.map((stream) => (
+          <div style={{ marginTop: "10px" }}>
+            <Stream stream={stream} />
+          </div>
+        ))}
     </div>
   );
 }
