@@ -21,16 +21,16 @@ const LensLab = (props) => {
         let cnv = p5.createCanvas(1800, 790).parent(canvasParentRef);
         height = p5.height;
         width = p5.width;
-        fSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 40, height - 170 + 165, -300, 300);
-        oSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 250, height - 170 + 165, 50, 820);
-        hSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 445, height - 170 + 165, -145, 145);
+        fSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 40, height - 170 + 195, -300, 300);
+        oSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 250, height - 170 + 195, 50, 820);
+        hSlider = getSlider(p5, (p5.windowWidth-p5.width)/2 + 150 + 445, height - 170 + 195, -145, 145);
         cX = width / 2;
         cY = height / 2;
 
         draggingL = draggingO = 0;
 
         btnSave = p5.createButton("Save Image");
-        btnSave.position(125, 110);
+        btnSave.position(253, 145);
         btnSave.style("width", "100px");
         btnSave.style("height", "35px");
         btnSave.style("color", "blue");

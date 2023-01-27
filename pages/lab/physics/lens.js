@@ -5,6 +5,7 @@ import CenteredContainer from "../../../componants/CenteredContainer";
 import {ScrereRecording} from "../../../componants/ScreneRecording";
 import LensLab from "../../../componants/LensLab";
 import { useEffect, useState } from "react";
+import { Button } from '@mantine/core';
 
 export default function Home() {
 
@@ -50,6 +51,21 @@ export default function Home() {
                 <LensLab />
             
             </CenteredContainer>
+
+            
+            <div style={{
+                marginTop:"880px",
+                marginLeft:"1100px",
+                marginBottom:"40px"
+            }}>
+            
+            {!isTeacher && (<Button color="cyan" size="lg">
+                Take Quiz
+            </Button>)}
+        
+            </div>
+            <div></div>
+
             </div>
             
         </div>
