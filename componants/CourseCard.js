@@ -1,6 +1,9 @@
 import { Card, Image, Text } from "@mantine/core";
+import { useRouter } from "next/router";
 
-export default function CourseCard() {
+export default function CourseCard(props) {
+  const router = useRouter();
+  const {course} = props;
   return (
     <>
       <Card
@@ -8,7 +11,6 @@ export default function CourseCard() {
         p="xl"
         radius="lg"
         component="a"
-        href="/auth"
         target="_blank"
         withBorder
         sx={{
@@ -23,6 +25,9 @@ export default function CourseCard() {
             border: "2px solid blue",
           },
         }}
+        onClick={() => {
+          router.push(`/courses/${course._id}`);
+        }}
       >
         <Card.Section>
           <Image
@@ -33,13 +38,13 @@ export default function CourseCard() {
         </Card.Section>
 
         <Text weight={800} size="lg" mt="md">
-          Computer Graphics
+          {course.name}
         </Text>
         <Text weight={600} size="md" mt="md">
-          CSE373
+          {course.subject}
         </Text>
         <Text weight={400} size="sm" mt="md">
-          2018/19
+          {course.session}
         </Text>
       </Card>
     </>

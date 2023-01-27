@@ -2,7 +2,10 @@ import Head from "next/head";
 import Navbar from "../componants/Navbar";
 import { useEffect } from "react";
 export default function Home() {
+<<<<<<< HEAD
   
+=======
+>>>>>>> 46ec9d3125932c3bdd753cd5f7a5e1dbad07b7f2
   return (
     <div
       style={{
@@ -16,7 +19,7 @@ export default function Home() {
         <title>LabTastic | Home</title>
         <meta name="description" content="LabTastic Homepage" />
       </Head>
-      <Navbar/>
+      <Navbar />
       <main>
         <p>Lab Tastic</p>
       </main>
