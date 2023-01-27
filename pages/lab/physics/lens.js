@@ -1,12 +1,14 @@
 import Head from "next/head";
 import styles from "../../../styles/Home.module.css";
-import Molarity from "../../../componants/Molarity";
 import Navbar from "../../../componants/Navbar";
 import CenteredContainer from "../../../componants/CenteredContainer";
 import {ScrereRecording} from "../../../componants/ScreneRecording";
+import LensLab from "../../../componants/LensLab";
 import { useEffect, useState } from "react";
+import { Button } from '@mantine/core';
 
 export default function Home() {
+
     const [isTeacher, setIsTeacher] = useState(false);
 
     useEffect(() => {
@@ -23,6 +25,7 @@ export default function Home() {
         }
         
     }, []);
+
 
     return (
         <div style={{
@@ -42,18 +45,24 @@ export default function Home() {
             {isTeacher && <ScrereRecording></ScrereRecording>}
             </div>
             
-            <div  style={{
-                margin:"650px"
-            }}>
+            
             <CenteredContainer >
-            <div  style={{
-                margin:"250px"
-            }}>
-                <Molarity />
-            </div>
+            
+                <LensLab />
+            
             </CenteredContainer>
-            </div>
+
+            
+            <div style={{
+                marginTop:"880px",
+                marginLeft:"1100px",
+                marginBottom:"40px"
+            }}>
+            
            
+            </div>
+            <div></div>
+
             </div>
             
         </div>

@@ -7,10 +7,13 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import CodeModal from "../../componants/CodeModal";
 import LabSelectModal from "../../componants/LabSelectModal";
+import VideoUploadModal from "../../componants/VideoUploadModal";
+import StudentTable from "../../componants/StudentInfo";
 export default function Home(props) {
   const router = useRouter();
   const { id } = router.query;
   const [isTeacher, setIsTeacher] = useState(false);
+  const [openVideoModal, setOpenVideoModal] = useState(false);
   const [codeModal, setCodeModal] = useState(false);
   const [labDemo, setLabDemo] = useState(false);
   const [course, setCourse] = useState({
@@ -19,6 +22,8 @@ export default function Home(props) {
     subject: "",
     session: "",
   });
+  const [show, setShow] = useState("stream");
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
@@ -40,6 +45,7 @@ export default function Home(props) {
       });
     }
   }, [id]);
+
 
   return (
     <div
@@ -84,6 +90,9 @@ export default function Home(props) {
             variant="gradient"
             gradient={{ from: "teal", to: "lime", deg: 105 }}
             sx={{ margin: 20 }}
+            onClick={() => {
+              setOpenVideoModal(true);
+            }}
           >
             Give Task
           </Button>
@@ -121,6 +130,8 @@ export default function Home(props) {
         setOpened={setLabDemo}
         subject={course.subject}
       />
+      <VideoUploadModal opened={openVideoModal} setOpened={setOpenVideoModal} id={id} />
+      <StudentTable/>
     </div>
   );
 }
