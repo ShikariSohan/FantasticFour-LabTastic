@@ -31,7 +31,6 @@ export default function Home(props) {
             const result = await axios.post("/api/studentsclass", {
               id: user._id,
             });
-            setCourses(result.data.data);
           } catch (err) {
             console.log(err);
           }
@@ -52,7 +51,8 @@ export default function Home(props) {
         code: joinCode,
       });
       if (result.status === 200) {
-        setCourses([...courses, result.data]);
+        setCourses([...courses]);
+        window.location.reload();
       }
     } catch (err) {
       console.log(err);

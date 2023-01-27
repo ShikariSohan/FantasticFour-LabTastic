@@ -14,6 +14,9 @@ import axios from "axios";
 import { IconAlertCircle } from "@tabler/icons";
 import { useRouter } from "next/router";
 import { useAuth } from "../context/AuthProvider";
+import { Notification } from "@mantine/core";
+import { IconCheck, IconX } from "@tabler/icons";
+
 export default function Home() {
   const router = useRouter();
 
@@ -21,17 +24,14 @@ export default function Home() {
     email: "",
     password: "",
   });
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
+  const [loginError, setLoginError] = useState(false);
   const [signupInfo, setSignupInfo] = useState({
     email: "",
     password: "",
     name: "",
     avatar: "default.png",
     role: "student",
-  });
-  const [msg, setMsg] = useState({
-    type: "Success",
-    open: true,
-    color: "green",
   });
   const onChangeLogin = (e) => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
@@ -48,20 +48,11 @@ export default function Home() {
           ...res.data.data,
         };
         localStorage.setItem("user", JSON.stringify(userData));
-        setMsg({
-          type: "Success",
-          open: true,
-          color: "green",
-        });
         router.push("/");
       });
     } catch (e) {
       console.log(e);
-      setMsg({
-        type: "Error",
-        open: true,
-        color: "red",
-      });
+      setLoginError(true);
     }
   };
 
@@ -72,20 +63,11 @@ export default function Home() {
         if (res.status === 201) {
           console.log(res.data);
         }
-        setMsg({
-          type: "Success",
-          open: true,
-          color: "green",
-        });
         window.location.reload();
       })
       .catch(function (e) {
         console.log(e);
-        setMsg({
-          type: "Error",
-          open: true,
-          color: "red",
-        });
+        setLoginError(true);
       });
   };
 
@@ -127,14 +109,6 @@ export default function Home() {
             >
               <Logo size={40} weight={800} logoSize={"100px"} />
             </div>
-            {msg.open && (
-              <MessageDialog
-                opened={msg.open}
-                color={msg.color}
-                type={msg.type}
-                setOpen={setMsg}
-              />
-            )}
             <Tabs defaultValue="login">
               <Tabs.List position="center" grow>
                 <Tabs.Tab value="login">
@@ -302,6 +276,30 @@ export default function Home() {
             width={700}
             height={700}
           />
+
+          {signUpSuccess == true && (
+            <Notification
+              icon={<IconCheck size={18} />}
+              color="teal"
+              title="Teal notification"
+              onAbort={() => {
+                setSignUpSuccess(false);
+              }}
+            >
+              This is teal notification with icon
+            </Notification>
+          )}
+          {loginError == true && (
+            <Notification
+              icon={<IconX size={18} />}
+              color="red"
+              onAbort={() => {
+                setSignUpSuccess(false);
+              }}
+            >
+              Bummer! Notification without title
+            </Notification>
+          )}
         </div>
       </div>
     </div>
