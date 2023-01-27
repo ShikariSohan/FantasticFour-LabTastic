@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 
 export default function CourseCard(props) {
   const router = useRouter();
-  const {course} = props;
+  const { course } = props;
+
   return (
     <>
       <Card
@@ -26,15 +27,12 @@ export default function CourseCard(props) {
           },
         }}
         onClick={() => {
-          router.push(`/courses/${course._id}`);
+          if (props.isTeacher) router.push(`/courses/${course._id}`);
+          else router.push(`/student/${course._id}`);
         }}
       >
         <Card.Section>
-          <Image
-            src=" https://placekeanu.com/200/150"
-            height={160}
-            alt="No way!"
-          />
+          <Image src={`\\${course.subject}.jpg`} height={160} alt="No way!" />
         </Card.Section>
 
         <Text weight={800} size="lg" mt="md">

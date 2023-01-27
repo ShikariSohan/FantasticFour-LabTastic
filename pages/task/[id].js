@@ -15,30 +15,13 @@ import { IconSquarePlus } from "@tabler/icons";
 
 import { useRouter } from "next/router";
 import CenteredContainer from "../../componants/CenteredContainer";
-const data = [
-  {
-    id: 1,
-    question: "What is the focus length?",
-  },
-  {
-    id: 2,
-    question: "What is the focus length?",
-  },
-  {
-    id: 3,
-    question: "What is the focus length?",
-  },
-  {
-    id: 4,
-    question: "What is the focus length?",
-  },
-];
 export default function Home(props) {
   const [opened, setOpened] = useState(false);
   const router = useRouter();
-  const { id } = router.query;
-  const [isTeacher, setIsTeacher] = useState("");
 
+  const [isTeacher, setIsTeacher] = useState("");
+  const [task, setTask] = useState(null);
+  const { id } = router.query;
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
@@ -51,6 +34,16 @@ export default function Home(props) {
     } else {
       router.push("/auth");
     }
+    const f = async () => {
+      try {
+        const result = await axios.get(`/api/task/${id}`);
+        console.log(result);
+        setTask(result.data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    f();
   }, []);
 
   return (
@@ -68,53 +61,79 @@ export default function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <div
-      >
-        <CenteredContainer>
-          <Title order={3} size="h1">
-            Task Title : Hello darkness old my friend
-          </Title>
-          <Title order={3} size="h1">
-            Instruction :
-          </Title>
-          <TypographyStylesProvider>
-            <div
-              dangerouslySetInnerHTML={{ __html: "<p>Your html here</p>" }}
-            />
-          </TypographyStylesProvider>
 
-          {/* <AspectRatio ratio={16 / 9}> */}
-        
-          {/* </AspectRatio> */}
+      <div
+        style={{
+          marginTop: "20px",
+          marginLeft: "100px",
+        }}
+      >
+        {task != null && (
           <div>
             <Title order={3} size="h1">
-              Quiz
+              Task Title : {task.name}
             </Title>
+            <Title order={3} size="h1">
+              Instruction :
+            </Title>
+            <TypographyStylesProvider>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify(task.instruction),
+                }}
+              />
+            </TypographyStylesProvider>
+
+            {/* <AspectRatio ratio={16 / 9}> */}
+
+            {/* </AspectRatio> */}
             <div>
-              {data.length > 0 &&
-                data.map((item) => {
-                  return (
-                    <div>
-                      <Title order={6} size="h4">
-                        {item.question}
-                      </Title>
+              <Title order={3} size="h1">
+                Quiz
+              </Title>
+              <div
+                style={{
+                  marginTop: "20px",
+                  marginLeft: "100px",
+                }}
+              >
+                {task.questionSet.length > 0 &&
+                  task.questionSet.map((item) => {
+                    return (
                       <div>
-                        <Input
-                          placeholder="Answer"
-                          variant="filled"
-                          size="lg"
-                          style={{ width: "100%" }}
-                        />
+                        <Title order={6} size="h4">
+                          Question:
+                        </Title>
+                        <TypographyStylesProvider>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: JSON.stringify(item.question),
+                            }}
+                          />
+                        </TypographyStylesProvider>
+                        <div>
+                          <Input
+                            placeholder="Answer"
+                            variant="filled"
+                            size="lg"
+                            style={{ width: "100%" }}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+              </div>
+              <Button
+                sx={
+                    {
+                        marginTop: "20px",
+                        marginLeft: "100px",
+                    }
+                }
+              >Submit</Button>
             </div>
-            <Button>
-                Submit
-            </Button>
           </div>
-        </CenteredContainer>
+        )}
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import Navbar from "../../componants/Navbar";
 import { Button, Text } from "@mantine/core";
 import NewCourseModal from "../../componants/NewCourseModal";
 import { useEffect, useState } from "react";
-import Stream from "../../componants/Stream";
+import StreamStudent from "../../componants/StreamStudent";
 import axios from "axios";
 import { useRouter } from "next/router";
 import CodeModal from "../../componants/CodeModal";
@@ -14,6 +14,7 @@ export default function Home(props) {
   const [isTeacher, setIsTeacher] = useState(false);
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
+
     if (user) {
       if (user.isLoggedIn === undefined || user.isLoggedIn === false) {
         router.push("/auth");
@@ -28,8 +29,6 @@ export default function Home(props) {
 
   const router = useRouter();
   const { id } = router.query;
-  const [openVideoModal, setOpenVideoModal] = useState(false);
-  const [codeModal, setCodeModal] = useState(false);
   const [labDemo, setLabDemo] = useState(false);
   const [course, setCourse] = useState({
     code: "",
@@ -94,27 +93,6 @@ export default function Home(props) {
         <Text size="md">{course.session}</Text>
       </div>
       <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-        <div>
-          <Button
-            variant="gradient"
-            gradient={{ from: "indigo", to: "cyan" }}
-            onClick={() => {
-              setCodeModal(true);
-            }}
-          >
-            Class Code
-          </Button>
-          <Button
-            variant="gradient"
-            gradient={{ from: "teal", to: "lime", deg: 105 }}
-            sx={{ margin: 20 }}
-            onClick={() => {
-              setOpenVideoModal(true);
-            }}
-          >
-            Give Task
-          </Button>
-        </div>
         <Button
           variant="gradient"
           size="xl"
@@ -125,48 +103,21 @@ export default function Home(props) {
         >
           Demonstate a lab
         </Button>
-        <div>
-          <Button
-            variant="gradient"
-            gradient={{ from: "orange", to: "red" }}
-            onClick={() => {
-              setShow(!show);
-            }}
-          >
-            Students
-          </Button>
-          <Button
-            variant="gradient"
-            gradient={{ from: "#ed6ea0", to: "#ec8c69", deg: 35 }}
-            sx={{ margin: 20 }}
-          >
-            Evaluations
-          </Button>
-        </div>
       </div>
-      <CodeModal
-        opened={codeModal}
-        setOpened={setCodeModal}
-        code={course.code}
-      />
+
       <LabSelectModal
         opened={labDemo}
         setOpened={setLabDemo}
         subject={course.subject}
       />
-      <VideoUploadModal
-        opened={openVideoModal}
-        setOpened={setOpenVideoModal}
-        id={id}
-      />
+
       {show == true &&
         stream.length > 0 &&
         stream.map((stream) => (
           <div style={{ marginTop: "10px" }}>
-            <Stream stream={stream} />
+            <StreamStudent stream={stream} />
           </div>
         ))}
-      {show == false && <StudentTable students={students} />}
     </div>
   );
 }
