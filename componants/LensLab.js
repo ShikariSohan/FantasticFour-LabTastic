@@ -15,6 +15,7 @@ let height = 700;
 let width = 700;
 let cX, cY;
 let draggingL, draggingO;
+let imL, imH;
 
 const LensLab = (props) => {
     const setup = (p5, canvasParentRef) => {
@@ -191,6 +192,13 @@ function refractionRay(p5) {
     let y = (hSlider.value() * (x - cX)) / oSlider.value();
     y += cY;
     p5.line(x, y, x, cY);
+    
+    imL = x - cX;
+    imH = y - cY;
+
+    imL = Math.trunc(imL*1000)/1000;
+    imH = Math.trunc(imH*1000)/1000;
+
     let r = Math.abs(x - cX) * 15;
     r /= oSlider.value();
     p5.circle(x, y, r);
@@ -327,7 +335,7 @@ function menu(p5) {
     p5.fill(255, 230, 255);
     p5.stroke(255, 128, 255);
     p5.strokeWeight(0.5);
-    p5.rect(150, height - 170, width - 300, 150, 10);
+    p5.rect(150, height - 170, width - 650, 150, 10);
     p5.pop();
 
     p5.push();
@@ -337,12 +345,16 @@ function menu(p5) {
     p5.text("Focal Length", 50, 50);
     p5.text("Object Distance", 250, 50);
     p5.text("Object Height", 450, 50);
+    p5.text("Image Distance", 670, 50);
+    p5.text("Image Height", 880, 50);
 
     p5.fill(15);
     p5.strokeWeight(0.5);
     p5.text(fSlider.value(), 85, 110);
     p5.text(oSlider.value(), 300, 110);
     p5.text(hSlider.value(), 500, 110);
+    p5.text(imL, 700, 110);
+    p5.text(imH, 900, 110);
 
     p5.pop();
 }

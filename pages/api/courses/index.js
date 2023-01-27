@@ -12,7 +12,6 @@ export default async function handler(req, res) {
       try {
         console.log(req.headers.authtoken);
         if (req.headers.authtoken == undefined) return res.send(401);
-
         const user = jwt.verify(req.headers.authtoken, process.env.JWT_SECRET);
         const id = user.user.id;
         const classrooms = await Classroom.find({ teacher: id });

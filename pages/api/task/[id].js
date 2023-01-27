@@ -9,9 +9,10 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const { id } = req.query;
-        const data = await Task.find({
-          classroom: id,
+        const data = await Task.findOne({
+          _id: id,
         });
+        console.log(data);
         res.status(201).json({ success: true, data: data });
       } catch (error) {
         res.status(400).json({ success: false });
