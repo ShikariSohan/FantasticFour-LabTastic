@@ -25,11 +25,24 @@ export default function Home(props) {
       }
       if (user.role === "teacher") {
         setIsTeacher(true);
+      } else {
+        const f = async () => {
+          try {
+            const result = await axios.post("/api/studentsclass", {
+              id: user._id,
+            });
+            setCourses(result.data.data);
+          } catch (err) {
+            console.log(err);
+          }
+        };
+        f();
       }
     } else {
       router.push("/auth");
     }
   }, []);
+
   useEffect(() => {
     setCourses(props.courses);
   }, [props]);
