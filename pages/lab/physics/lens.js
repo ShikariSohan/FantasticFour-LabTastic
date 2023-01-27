@@ -59,10 +59,7 @@ export default function Home() {
                 marginBottom:"40px"
             }}>
             
-            {!isTeacher && (<Button color="cyan" size="lg">
-                Take Quiz
-            </Button>)}
-        
+           
             </div>
             <div></div>
 

@@ -3,12 +3,31 @@ import { Title } from "@mantine/core";
 import { Text } from "@mantine/core";
 import { List, ThemeIcon } from "@mantine/core";
 import { IconCircleCheck, IconCircleDashed } from "@tabler/icons";
+import { useRouter } from "next/router";
 
 export default function LabSelectModal({ opened, setOpened, subject }) {
+  const router = useRouter();
   const labs = {
-    physics: ["Physics Lab 1", "Physics Lab 2", "P Lab 3"],
-    chemistry: ["Lab 1", "P Lab 2", "Lab 3"],
-    biology: ["Lab 1", "Lab 2", "Lab 3"],
+    chemistry: [{
+      url:"/lab/chemistry/molarity",
+      name:"Molarity Experiment"
+    }],
+    physics: [{
+      name:"Another Experiment",
+      url:"/lab/physics/lens"
+    },{
+      name:"Lens Experiment",
+      url:"/lab/physics/lens"
+    }],
+    biology: [{
+      name:"Plant Cell Examination",
+      url:"/lab/biology/cell"
+    },
+    {
+      name:"Another Experiment",
+      url:"/lab/biology/cell"
+    },
+  ],
   };
 
   return (
@@ -34,7 +53,12 @@ export default function LabSelectModal({ opened, setOpened, subject }) {
           <List.Item>No Labs Available</List.Item>
         ) : (
           labs[subject].map((lab) => {
-            return <List.Item>{lab}</List.Item>;
+            return <List.Item
+            
+            onClick={()=>{
+              router.push(lab.url)
+            }}
+            >{lab.name}</List.Item>;
           })
         )}
       </List>
