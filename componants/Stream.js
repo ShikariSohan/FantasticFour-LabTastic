@@ -2,6 +2,7 @@ import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
 import { Accordion } from '@mantine/core';
 import { IconPlus } from '@tabler/icons';
 import CenteredContainer from "../componants/CenteredContainer";
+import Link from 'next/link'
 
 export default function Stream(props) {
   return (
@@ -12,18 +13,20 @@ export default function Stream(props) {
       }}>
         <Card shadow="s"  p="lg" radius="md" withBorder>
         <Card.Section>
-            <Image
-            src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
-            height={360}
+            <iframe 
+            src="https://firebasestorage.googleapis.com/v0/b/labtastic-bb2ce.appspot.com/o/1674821547540.mp4?alt=media&token=324947d6-809f-4df9-81fc-397828c5b18e"
+            height={400}
             width={800}
-            alt="Thumbnail"
+            allowFullScreen
             />
         </Card.Section>
 
         <Group position="apart" mt="md" mb="xs">
             <Text weight={500}>props.caption</Text>
             <Badge color="cyan" variant="light">
-            Visit Link
+            <Link href='https://firebasestorage.googleapis.com/v0/b/labtastic-bb2ce.appspot.com/o/1674821547540.mp4?alt=media&token=324947d6-809f-4df9-81fc-397828c5b18e' download>
+            Download Video
+            </Link>
             </Badge>
         </Group>
 
