@@ -1,6 +1,7 @@
 import styles from "../styles/sr.module.css";
 import React, { useState, useEffect } from 'react';
 import { BackgroundImage } from "@mantine/core";
+import { sendRenderResult } from "next/dist/server/send-payload";
 function Mybutton({type,click}){
     if(type==="Start"){
       return(<div onClick={click}>
@@ -33,10 +34,10 @@ const upload = (file)=>{
 }
 export  function ScrereRecording (){
     const [state, setState] = useState({mode:0,start:null,stop:null});
-    let url;
     let mystream;
     let myaudio;
     const [myfile,setFile]= useState(null);
+    const [myurl,setUrl]= useState(null);
     const  handleClick = (e) => {
       navigator.mediaDevices.getDisplayMedia({
         video: {
@@ -77,8 +78,10 @@ export  function ScrereRecording (){
         };
       recorder.onstop = async () => {
       let blobData = new Blob(data, { type: 'video/mp4' });
-      url = URL.createObjectURL(blobData);
-      const mediaBlob = await fetch(url)
+      setUrl(URL.createObjectURL(blobData))
+      // url = URL.createObjectURL(blobData);
+
+      const mediaBlob = await fetch(myurl)
             .then(response => response.blob());
 
        const b  = new File(
@@ -103,7 +106,7 @@ export  function ScrereRecording (){
       height: "50px",
       width: "50px" 
     }}  onClick ={()=>{
-              download(url);
+              download(myurl);
           }}></div>
           <div style={{ 
       backgroundImage: `url("/upload.png")`,
