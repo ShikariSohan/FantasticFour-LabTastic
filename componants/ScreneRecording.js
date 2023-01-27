@@ -2,19 +2,19 @@ import styles from "../styles/sr.module.css";
 import React, { useState, useEffect } from 'react';
 function Mybutton({type,click}){
     if(type==="Start"){
-      return(<div className={styles.Row} onClick={click}>
+      return(<div onClick={click}>
         <div className={styles.Start}>
       
         </div>
-        Start recording
+        
         </div>)
     }else{
-      return(<div className={styles.Row}
+      return(<div 
       onClick={click}>
       <div className={styles.Stop}>
       
       </div>
-      Stop recording</div>)
+      </div>)
     }
   
   }
@@ -89,7 +89,7 @@ export  function ScrereRecording (){
 }
     if(state.mode===1){
       return (
-        <div className={styles.Row}><Mybutton type="Start" click={state.start}>start</Mybutton><Mybutton type="Stop" click={state.stop}>start</Mybutton></div>
+        <div ><Mybutton type="Start" click={state.start}>start</Mybutton><Mybutton type="Stop" click={state.stop}>start</Mybutton></div>
         
       )
     }else{
