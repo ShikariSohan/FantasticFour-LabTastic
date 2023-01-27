@@ -54,6 +54,7 @@ export default function Navbar() {
               variant="cyan"
               color="dark"
               sx={{ marginRight: "10px" }}
+              onClick={() => router.push("/profile")}
             >
               Profile
             </Button>
