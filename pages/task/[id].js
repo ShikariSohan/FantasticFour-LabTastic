@@ -50,6 +50,7 @@ export default function Home(props) {
   const [score, setScore] = useState(0);
   const sendData = () => {
     const f = async () => {
+        router.push("/courses");
       try {
         const result = await axios.post(`/api/result/${id}`, {
           score,
@@ -105,7 +106,7 @@ export default function Home(props) {
             {/* </AspectRatio> */}
             <div>
               <Title order={3} size="h1">
-                Quiz -- Score - {score}
+                Quiz -- Score - {task.questionSet.length}
               </Title>
               <div
                 style={{

@@ -1,10 +1,10 @@
 import { Card, Image, Text, Badge, Button, Group } from "@mantine/core";
-import { Accordion ,TypographyStylesProvider} from "@mantine/core";
+import { Accordion, TypographyStylesProvider } from "@mantine/core";
 import { IconPlus } from "@tabler/icons";
 import CenteredContainer from "../componants/CenteredContainer";
 import Link from "next/link";
 
-export default function Stream({ stream }) {
+export default function Stream({ stream ,setTaskScore}) {
   return (
     <div
       style={{
@@ -36,12 +36,12 @@ export default function Stream({ stream }) {
           </TypographyStylesProvider>
         </Text>
 
-        <Accordion chevronPosition="left" defaultValue="See quizes">
-          <Accordion.Item value="customization">
-            <Accordion.Control>See quizes</Accordion.Control>
-            <Accordion.Panel>----Table of quize----</Accordion.Panel>
-          </Accordion.Item>
-        </Accordion>
+        <Button color="teal"
+        onClick={()=>{
+          setTaskScore(true)
+        }}
+
+        >See Scores</Button>
       </Card>
     </div>
   );

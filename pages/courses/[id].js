@@ -10,6 +10,7 @@ import CodeModal from "../../componants/CodeModal";
 import LabSelectModal from "../../componants/LabSelectModal";
 import VideoUploadModal from "../../componants/VideoUploadModal";
 import StudentTable from "../../componants/StudentInfo";
+import TaskScoreModel from "../../componants/TaskScoreModel";
 export default function Home(props) {
   const [isTeacher, setIsTeacher] = useState(false);
   useEffect(() => {
@@ -25,7 +26,18 @@ export default function Home(props) {
       router.push("/auth");
     }
   }, []);
-
+  useEffect(() => {
+    const f = async () => {
+      try {
+        const userId = JSON.parse(localStorage.getItem("user"))._id;
+        const result = await axios.get(`/api/result/${userId}`);
+        console.log(result);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    f();
+  }, []);
   const router = useRouter();
   const { id } = router.query;
   const [openVideoModal, setOpenVideoModal] = useState(false);
@@ -64,6 +76,7 @@ export default function Home(props) {
       });
     }
   }, [id]);
+  const [taskScore, setTaskScore] = useState(false);
 
   return (
     <div
@@ -163,10 +176,11 @@ export default function Home(props) {
         stream.length > 0 &&
         stream.map((stream) => (
           <div style={{ marginTop: "10px" }}>
-            <Stream stream={stream} />
+            <Stream stream={stream} setTaskScore={setTaskScore} />
           </div>
         ))}
       {show == false && <StudentTable students={students} />}
+      <TaskScoreModel opened={taskScore} setOpened={setTaskScore} id={id} />
     </div>
   );
 }
