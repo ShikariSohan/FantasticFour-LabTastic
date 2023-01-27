@@ -5,18 +5,20 @@ const classroomSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  instruction:{
-    type:String,
+  instruction: {
+    type: String,
   },
-  url:{
-    type:String
+  url: {
+    type: String,
   },
-  questionSet:[{
-    question:String,
-    answer:String
-  }],
-  classroom:{
-    type:String
+  questionSet: [
+    {
+      question: String,
+      answer: String,
+    },
+  ],
+  classroom: {
+    type: String,
   },
   createdAt: {
     type: Date,
@@ -29,4 +31,4 @@ const classroomSchema = new mongoose.Schema({
 });
 
 module.exports =
-  mongoose.models.Classroom || mongoose.model("Classroom", classroomSchema);
+  mongoose.models.Task || mongoose.model("Task", classroomSchema);

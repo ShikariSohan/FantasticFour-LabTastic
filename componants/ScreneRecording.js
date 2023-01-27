@@ -18,8 +18,24 @@ function Mybutton({type,click}){
     }
   
   }
+const download = (url)=>{
+
+    let alink = document.createElement('a');
+    alink.href = url;
+    var mydate=new Date().toLocaleTimeString();
+    alink.download = 'Lab Practice'+mydate+'.mp4';
+    alink.click();
+
+}
+const upload = (file)=>{
+      console.log(file);
+}
 export  function ScrereRecording (){
     const [state, setState] = useState({mode:0,start:null,stop:null});
+    let url;
+    let mystream;
+    let myaudio;
+    const [myfile,setFile]= useState(null);
     const  handleClick = (e) => {
       navigator.mediaDevices.getDisplayMedia({
         video: {
@@ -29,8 +45,11 @@ export  function ScrereRecording (){
     })
     .then(async (stream) => {
       let data=[];
+      mystream=stream;
+      
       let audio = await navigator.mediaDevices.getUserMedia({ 
       audio: true, video: false }) 
+      myaudio=audio;
       // Combine both video/audio stream with MediaStream object
       let combine = new MediaStream(
       [...stream.getTracks(), ...audio.getTracks()])
@@ -57,39 +76,46 @@ export  function ScrereRecording (){
         };
       recorder.onstop = async () => {
       let blobData = new Blob(data, { type: 'video/mp4' });
-        let url = URL.createObjectURL(blobData);
-        const mediaBlob = await fetch(url)
+      url = URL.createObjectURL(blobData);
+      const mediaBlob = await fetch(url)
             .then(response => response.blob());
 
-            const myFile = new File(
+       const b  = new File(
                     [mediaBlob],
                     "demo.mp4",
                     { type: 'video/mp4' }
+                    
             );
-        let alink = document.createElement('a');
-          alink.href = url;
-          var mydate=new Date().toLocaleTimeString();
-          alink.download = 'Lab Practice'+mydate+'.mp4';
-          alink.click();
-          stream.getTracks().forEach(function(track) {
-            if (track.readyState == 'live') {
-                track.stop();
-            }
-        });
-        audio.getTracks().forEach(function(track) {
-          if (track.readyState == 'live') {
-              track.stop();
-          }
-      }); 
-          setState({mode:0,start:null,stop: null});
+
+        setFile(b);
         };
       });
-
-  console.log('The link was clicked.');
 }
     if(state.mode===1){
       return (
-        <div ><Mybutton type="Start" click={state.start}>start</Mybutton><Mybutton type="Stop" click={state.stop}>start</Mybutton></div>
+        <div >
+          <Mybutton type="Start" click={state.start}>start</Mybutton><Mybutton type="Stop" click={state.stop}>start</Mybutton>
+          <button onClick ={()=>{
+              download(url);
+          }}>download</button>
+          <button onClick={()=>{
+                      mystream.getTracks().forEach(function(track) {
+                          if (track.readyState == 'live') {
+                              track.stop();
+                          }
+                      });
+                      myaudio.getTracks().forEach(function(track) {
+                        if (track.readyState == 'live') {
+                            track.stop();
+                        }
+                    }); 
+                        setState({mode:0,start:null,stop: null});
+          }}>Stop Sharing</button>
+          <button onClick={()=>{
+              upload(myfile);
+          }}>upload</button>
+          
+        </div>
         
       )
     }else{
